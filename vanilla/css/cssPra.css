@@ -9,3 +9,13 @@ h1{
 .clicked{
     color: blue;
 }
+
+.form,
+.geetings{
+    display :none;
+}
+
+.showing{
+    display: block;
+}
+
