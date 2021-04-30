@@ -17,9 +17,6 @@ function getTime(){
      }`;
 }
 
-function sayHi(){
-     console.log('Hi my friend!!');
-}
 
 function init() {
      
