@@ -51,10 +51,21 @@ const test = checkSchema({
     },
     boolean : {
     
-      isBoolean:{
-        bail:true,
-        errorMessage:"boolean이 아닌데요?"
-      }
+      custom:{
+        
+        options : value =>{
+          if(value==='T' || value==='t' || value==='Y' ||value==='y'|| value=='true'||value=='TRUE'||value=='F' || value=='f' || value=='N' ||value=='n'|| value=='false'||value=='FALSE'){
+            console.log("let's get it~~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!")
+            return true;
+          }
+        }
+      },
+
+      // isBoolean:{
+      //   bail:true,
+      //   errorMessage:"boolean이 아닌데요?"
+      // }
+      
   
     },
   

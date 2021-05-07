@@ -1,3 +1,4 @@
+const { json } = require('express');
 var express = require('express');
 const {body, validationResult} = require('express-validator');
 // const {checkSchema} = require('express-validator');
@@ -80,6 +81,13 @@ router.post('/id/check', test ,(req, res, next) => {
   // 그렇지 않다면 해당 로그를 출력한다.
   console.log('Success');
   // 다음 라우터로 넘어가라
+  next();
+})
+
+router.post('/receive',  (req, res, next) => {
+  console.log('hi i am here');
+  
+  console.log(req.body);
   next();
 })
 
