@@ -29,7 +29,8 @@ const test = checkSchema({
     email : {
       isEmail:{
         errorMessage : "email 형식이 아닙니다.",
-        bail : true
+        bail : true // 이전 유효성 검사 중 하나라도 실패하면 실행중인 유효성 검사를 중지합니다. 데이터베이스 또는 외부 API를 건 드리는 사용자 지정 유효성 검사기가 실패 할 경우 실행되는 것을 방지하는 데 유용합니다.
+        // 여기서 만약 에러가 발생했다면, 다음 검사를 하지 않겠다는 뜻. 좀 더 빨리 에러를 확인할 수 있다.
       },
       isLength : {
         options :{min : 1},

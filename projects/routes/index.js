@@ -1,8 +1,10 @@
 const { json } = require('express');
 var express = require('express');
 const {body, validationResult} = require('express-validator');
-// const {checkSchema} = require('express-validator');
 var router = express.Router();
+const db = require('../db/mysql')();
+const connection = db.init();
+db.open(connection);
 
 const test = require('../validator/testValidator');
 
@@ -11,10 +13,14 @@ const test = require('../validator/testValidator');
 /* GET home page. */
 // id, password, email, date, integer, boolean ==> check 
 
-router.get('/id', function(req, res, next) {
+router.get('/adf', function(req, res, next) {
   //res.render('index', { title: 'Express' });
-  res.json({a:'adf'})
-  next();
+  res.json({
+    status:'succes',
+    data : {a:'adf'}
+  })
+  // res.json()
+  
 });
 
 // sanitization 방식
@@ -65,7 +71,29 @@ router.post('/id', [
   // 그렇지 않다면 해당 로그를 출력한다.
   console.log('Success');
   // 다음 라우터로 넘어가라
-  next();
+
+  // console.log(req.body);
+  // const id = req.body.id;
+  // const password = req.body.password;
+  // const email = req.body.email;
+  // const date = req.body.date;
+  // const integer = parseInt(req.body.integer);
+
+  const {id,password,email,date,integer} = req.body;
+
+  let boolean = null;
+  if(req.body.boolean==='T' || req.body.boolean==='t' || req.body.boolean==='Y' ||req.body.boolean==='y'|| req.body.boolean=='true'||req.body.boolean=='TRUE'){
+    boolean = true;
+  }else if(req.body.boolean=='F' || req.body.boolean=='f' || req.body.boolean=='N' ||req.body.boolean=='n'|| req.body.boolean=='false'||req.body.boolean=='FALSE'){
+    boolean = false; 
+  }
+  //const boolean = req.body.boolean;
+
+  console.log(id,'\n',password,'\n',email,'\n',date,'\n',integer,'\n',boolean);
+
+  res.json(req.body);
+
+  // next();
 }
 );
 
@@ -82,14 +110,34 @@ router.post('/id/check', test ,(req, res, next) => {
   console.log('Success');
   // 다음 라우터로 넘어가라
   next();
-})
+});
 
 router.post('/receive',  (req, res, next) => {
   console.log('hi i am here');
   
   console.log(req.body);
   next();
-})
+});
+
+router.get('/test', (req,res,next) => {
+  const sql = `SELECT * FROM topic`;
+  
+  connection.query(sql, (error, rows, field) => {
+    if(error){
+      console.log(error);
+    }
+    
+    console.log(rows);
+    res.json(rows);
+  });
+  
+  // next();
+});
+
+router.get('/test2', (req,res,next) => {
+  db.getAllFromTopic();
+  next();
+});
 
 module.exports = router;
 
