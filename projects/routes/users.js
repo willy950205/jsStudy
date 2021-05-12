@@ -2,10 +2,12 @@ var express = require('express');
 var router = express.Router();
 const mysql = require('../db/mysql')();
 const connection = mysql.init();
+const cookiePartser = require('cookie-parser');
 mysql.open(connection);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  console.log("Cookie  :  ",req.cookies);
   res.send('respond with a resource');
 });
 
